@@ -1,0 +1,74 @@
+close all;
+clear;
+format short g
+%% Plot default 
+set(0,'DefaultLineLinewidth',2)%2
+set(0,'DefaultAxesFontSize',20)%20
+% set(0,'DefaultAxesXGrid','on',...
+% 'DefaultAxesYGrid','on',...
+% 'DefaultAxesZGrid','on')
+set(0,'DefaultTextInterpreter', 'latex')
+% warning('off','MATLAB:handle_graphics:exceptions:SceneNode') %no warning for error updating text
+%% Load Data
+load('20190407_pseudoStable_CollectiveTailSteps') %mettere indirizzo
+
+%% Signals
+
+%%%----Inputs----
+
+col_ts=logsout.find("u_collectiveMain_1").Values;
+lat_ts=logsout.find("u_aileron_1").Values;
+lon_ts=logsout.find("u_elevator_1").Values;
+ped_ts=logsout.find("u_collectiveTail_1").Values;
+
+%%%----Outputs----
+
+%Body rotational velocity
+ 
+p_ts=logsout.find("y_p_1").Values; %roll rate [rad/s]
+q_ts=logsout.find("y_q_1").Values; %pitch rate [rad/s]
+r_ts=logsout.find("y_r_1").Values; %yaw rate [rad/s]
+
+%Body orientation (Euler Angles)
+
+phi_ts=logsout.find("y_roll_1").Values; %roll [deg]
+theta_ts=logsout.find("y_pitch_1").Values; %pitch [deg]
+psi_ts=logsout.find("y_heading_1").Values; %yaw [deg]
+
+%Inertial Position
+
+p_x=logsout.find("y_Px_1").Values; %[m];
+p_y=logsout.find("y_Py_1").Values; %[m];
+p_z=logsout.find("y_Pz_1").Values; %[m];
+
+%Inertial Speed
+
+v_x=logsout.find("y_Vx_1").Values; %[m/s];
+v_y=logsout.find("y_Vy_1").Values; %[m/s];
+v_z=logsout.find("y_Vz_1").Values; %[m/s];
+
+%% Plot
+
+close all
+
+figure;plot(col_ts);ax(1)=gca;grid;
+figure;plot(lat_ts);ax(2)=gca;grid;
+figure;plot(lon_ts);ax(3)=gca;grid;
+figure;plot(lat_ts);ax(4)=gca;grid;
+
+figure;plot(p_ts);ax(5)=gca;grid;
+figure;plot(q_ts);ax(6)=gca;grid;
+figure;plot(r_ts);ax(7)=gca;grid;
+figure;plot(phi_ts);ax(8)=gca;grid;
+figure;plot(theta_ts);ax(9)=gca;grid;
+figure;plot(psi_ts);ax(10)=gca;grid;
+
+figure;plot(p_x);ax(11)=gca;grid;
+figure;plot(p_y);ax(12)=gca;grid;
+figure;plot(p_z);ax(13)=gca;grid;
+figure;plot(v_x);ax(11)=gca;grid;
+figure;plot(v_y);ax(12)=gca;grid;
+figure;plot(v_z);ax(13)=gca;grid;
+
+linkaxes(ax,'x');
+
