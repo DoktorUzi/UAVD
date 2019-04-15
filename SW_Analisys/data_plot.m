@@ -10,11 +10,18 @@ format short g
 % set(0,'DefaultTextInterpreter', 'latex')
 % % warning('off','MATLAB:handle_graphics:exceptions:SceneNode') %no warning for error updating text
 %% Load Data
-load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190411_advanceAndZigZag.mat') %mettere indirizzo
+%load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190411_advanceAndZigZag.mat') %mettere indirizzo
 
 % filename = ['..//MEGA_Skunkworks//', ...
 %            'X-plane/Simulation_Log_Example/20190402_collectiveMainStep_1.mat'];
 % dataset = load(filename);
+
+% go to folders up the hierarchy
+upUpFolder = fileparts(fileparts(pwd));
+
+filename = fullfile(upUpFolder, 'MEGA_Skunkworks','X-plane','Simulation_Log_Example','20190402_collectiveMainStep_1.mat');
+
+load(filename);
 %% Signals
 
 %%%----Inputs----
@@ -81,3 +88,4 @@ subplot(1,3,2);plot(v_y);ax(12)=gca;grid;
 subplot(1,3,3);plot(v_z);ax(13)=gca;grid;
 
 linkaxes(ax,'x');
+%% 
