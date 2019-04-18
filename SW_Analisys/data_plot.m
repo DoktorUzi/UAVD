@@ -10,26 +10,26 @@ format short g
 % set(0,'DefaultTextInterpreter', 'latex')
 % % warning('off','MATLAB:handle_graphics:exceptions:SceneNode') %no warning for error updating text
 %% Load Data
-%load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190411_advanceAndZigZag.mat') %mettere indirizzo
+load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190415_collectiveMainSteps.mat') %mettere indirizzo
 
 % filename = ['..//MEGA_Skunkworks//', ...
 %            'X-plane/Simulation_Log_Example/20190402_collectiveMainStep_1.mat'];
 % dataset = load(filename);
 
 % go to folders up the hierarchy
-upUpFolder = fileparts(fileparts(pwd));
+%upUpFolder = fileparts(fileparts(pwd));
 
-filename = fullfile(upUpFolder, 'MEGA_Skunkworks','X-plane','Simulation_Log_Example','20190402_collectiveMainStep_1.mat');
+%filename = fullfile(upUpFolder, 'MEGA_Skunkworks','X-plane','Simulation_Log_Example','20190415_collectiveMainSteps.mat');
 
-load(filename);
+%load(filename);
 %% Signals
 
 %%%----Inputs----
 try
-col_ts=logsout.find("u_collectiveMain_1").Values;
-lat_ts=logsout.find("u_aileron_1").Values;
-lon_ts=logsout.find("u_elevator_1").Values;
-ped_ts=logsout.find("u_collectiveTail_1").Values;
+col_ts=logsout.find("y_collectiveMain_1").Values;
+lat_ts=logsout.find("y_aileron_1").Values;
+lon_ts=logsout.find("y_elevator_1").Values;
+ped_ts=logsout.find("y_collectiveTail_1").Values;
 catch
 end
 %%%----Outputs----
@@ -62,10 +62,10 @@ v_z=logsout.find("y_Vz_1").Values; %[m/s];
 
 close all
 
-%figure;plot(col_ts);ax(1)=gca;grid;
-%figure;plot(lat_ts);ax(2)=gca;grid;
-%figure;plot(lon_ts);ax(3)=gca;grid;
-%figure;plot(lat_ts);ax(4)=gca;grid;
+figure;plot(col_ts);ax(1)=gca;grid;
+figure;plot(lat_ts);ax(2)=gca;grid;
+figure;plot(lon_ts);ax(3)=gca;grid;
+figure;plot(ped_ts);ax(4)=gca;grid;
 
 figure;
 subplot(1,3,1);plot(p_ts);ax(5)=gca;grid;
@@ -88,4 +88,14 @@ subplot(1,3,2);plot(v_y);ax(12)=gca;grid;
 subplot(1,3,3);plot(v_z);ax(13)=gca;grid;
 
 linkaxes(ax,'x');
-%% 
+%% Plot test collettivo 20190415_collectiveMainSteps
+
+% figure; hold on;plot(ped_ts);plot(col_ts);grid;
+% figure; hold on;plot(r_ts);plot(col_ts);grid;
+% figure; hold on;plot(v_y);plot(col_ts);grid;
+
+%usare tf_estim 
+
+%%
+
+
