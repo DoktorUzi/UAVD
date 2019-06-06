@@ -10,44 +10,44 @@ format short g
 % set(0,'DefaultTextInterpreter', 'latex')
 % % warning('off','MATLAB:handle_graphics:exceptions:SceneNode') %no warning for error updating text
 %% Load Data
-load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190415_collectiveMainSteps.mat');
-%load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190415_collectiveTailSteps.mat');
+%load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190415_collectiveMainSteps.mat');
+load('/home/luca/MEGA_Skunkworks/X-plane/Simulation_Log_Example/20190415_collectiveTailSteps.mat');
 
 
 %% Extract from Signals
 
 %%%%----Inputs----
  
-col_ts=logsout.find("y_collectiveMain_1").Values;
-lat_ts=logsout.find("y_aileron_1").Values;
-lon_ts=logsout.find("y_elevator_1").Values;
-ped_ts=logsout.find("y_collectiveTail_1").Values;
- 
-%%%%----Outputs----
-
-%%%------Body rotational velocity
-  
-p_ts=logsout.find("y_p_1").Values; %roll rate [rad/s]
-q_ts=logsout.find("y_q_1").Values; %pitch rate [rad/s]
-r_ts=logsout.find("y_r_1").Values; %yaw rate [rad/s]
-
-%%%------Body orientation (Euler Angles)
-
-phi_ts=logsout.find("y_roll_1").Values; %roll [deg]
-theta_ts=logsout.find("y_pitch_1").Values; %pitch [deg]
-psi_ts=logsout.find("y_heading_1").Values; %yaw [deg]
- 
-%%%------Inertial Position
-
-p_x_ts=logsout.find("y_Px_1").Values; %[m];
-p_y_ts=logsout.find("y_Py_1").Values; %[m];
-p_z_ts=logsout.find("y_Pz_1").Values; %[m];
-
-%%%-------Inertial Speed
-
-v_x_ts=logsout.find("y_Vx_1").Values; %[m/s];
-v_y_ts=logsout.find("y_Vy_1").Values; %[m/s];
-v_z_ts=logsout.find("y_Vz_1").Values; %[m/s];
+% col_ts=logsout.find("y_collectiveMain_1").Values;
+% lat_ts=logsout.find("y_aileron_1").Values;
+% lon_ts=logsout.find("y_elevator_1").Values;
+% ped_ts=logsout.find("y_collectiveTail_1").Values;
+%  
+% %%%%----Outputs----
+% 
+% %%%------Body rotational velocity
+%   
+% p_ts=logsout.find("y_p_1").Values; %roll rate [rad/s]
+% q_ts=logsout.find("y_q_1").Values; %pitch rate [rad/s]
+% r_ts=logsout.find("y_r_1").Values; %yaw rate [rad/s]
+% 
+% %%%------Body orientation (Euler Angles)
+% 
+% phi_ts=logsout.find("y_roll_1").Values; %roll [deg]
+% theta_ts=logsout.find("y_pitch_1").Values; %pitch [deg]
+% psi_ts=logsout.find("y_heading_1").Values; %yaw [deg]
+%  
+% %%%------Inertial Position
+% 
+% p_x_ts=logsout.find("y_Px_1").Values; %[m];
+% p_y_ts=logsout.find("y_Py_1").Values; %[m];
+% p_z_ts=logsout.find("y_Pz_1").Values; %[m];
+% 
+% %%%-------Inertial Speed
+% 
+% v_x_ts=logsout.find("y_Vx_1").Values; %[m/s];
+% v_y_ts=logsout.find("y_Vy_1").Values; %[m/s];
+% v_z_ts=logsout.find("y_Vz_1").Values; %[m/s];
 
 %% Plot
 
@@ -94,8 +94,25 @@ linkaxes(ax,'x');
 % 'interval',0.01);
 
 % Compute transfer function
-Fs = 1/0.01;
-figure;hold on;
-subplot(2,1,1);plot(col_ts.data(1:2000));
-subplot(2,1,2);plot(r_ts.data(1:2000));
+%Fs = 1/0.01;
 %tfestimate(col_ts.data(1000:2000),r_ts.data(1000:2000),[],[],[],Fs);
+
+% figure;hold on;
+% a1x(1)=subplot(2,1,1);plot(ped_ts.time(10300:10600),ped_ts.data(10300:10600));
+% a1x(2)=subplot(2,1,2);plot(r_ts.time(10300:10600),r_ts.data(10300:10600));
+% linkaxes(a1x,'x');
+%% Estimation
+input1=ped_ts.data(10300:10600);
+output1=r_ts.data(10300:10600);
+Ts=0.01;
+dat=iddata(output1,input1,Ts);
+
+%% Validation
+
+input_val=ped_ts.data(42100:42300);%(3300:3500);
+output_val=r_ts.data(42100:42300);%(3300:3500);
+dat_val=iddata(output_val,input_val,Ts);
+figure;
+compare(dat_val,tf3);
+
+%%
