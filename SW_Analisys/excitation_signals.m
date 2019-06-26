@@ -1,4 +1,4 @@
-function sig_faded = excitation_signals(A, w_min, w_max)
+function sig_faded = excitation_signals(A, w_min, w_max, Ts)
 
 % clc
 % clear all
@@ -17,7 +17,7 @@ xmax=Trec;
 
 %K=C2*(exp(C1*s/Trec)-1);
 x = @(s) w_min+(C2*(exp(C1*s/Trec)-1))*(w_max-w_min); 
-Fs=1/0.02;
+Fs=1/Ts;
 upper_limit = xmin:1/Fs:xmax;%linspace(xmin, xmax);
 
 xval = arrayfun(@(uplim) A*sin(integral(x, 0, uplim, 'ArrayValued',true)), upper_limit);
