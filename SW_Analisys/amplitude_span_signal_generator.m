@@ -1,6 +1,3 @@
-clear all
-close all
-clc
 
 workspace = 'D:\Mega\Skunkworks\X-plane\sine_sweeps_experiments';
 
@@ -18,6 +15,10 @@ for i = 1:length(A_values)
 
     excit_signal = [zeros(1,10*1/0.02), out];
 
-    save(strcat(workspace,'/excit_sw_A',num2str(A_values(i)*100)));
+    save(strcat(workspace,'/excit_sw_A',num2str(A_values(i)*100)),'excit_signal');
 
 end
+
+clear all
+close all
+clc
