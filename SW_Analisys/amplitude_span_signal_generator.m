@@ -15,8 +15,9 @@ for i = 1:length(A_values)
 
     out = excitation_signals(A_values(i), ome_min, ome_max, Ts);
 
-    excit_signal.values = [zeros(1,10*1/0.02), out];
-    excit_signal.time = (Ts:Ts:Ts*length(excit_signal.values));
+    excit_signal.signals.values = [zeros(1,10*1/0.02), out]';
+    excit_signal.signals.dimension = 1;
+    excit_signal.time = (Ts:Ts:Ts*length(excit_signal.signals.values))';
     excit_signal.Amplitude = A_values(i);
     excit_signal.Ts = Ts;
     excit_signal.ome_min = ome_min;
